@@ -37,7 +37,7 @@ public class CatDetection {
         int i_cont = -1;
         int i;
         Mat drawing = new Mat();
-        drawing.zeros(cont.size(), CvType.CV_8UC3);
+        drawing = drawing.zeros(cont.size(), CvType.CV_8UC3);
         for( i =0; i< contours.size(); i++){
             if (abs(Imgproc.contourArea(contours.get(i))) > max ){
                 max = abs(Imgproc.contourArea(contours.get(i)));

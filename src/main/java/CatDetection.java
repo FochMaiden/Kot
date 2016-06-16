@@ -11,6 +11,7 @@ public class CatDetection {
     private Mat cont;
     private List<MatOfPoint> contours;
     private List<Mat> end;
+    private Mat drawing = new Mat();
 
 
     CatDetection(Mat frame){
@@ -25,18 +26,17 @@ public class CatDetection {
 
     public List<Mat> detect(){
         frame.copyTo(img);
-        Imgproc.cvtColor(img, hsv_img, Imgproc.COLOR_BGR2HSV);
-        Core.inRange(hsv_img,new Scalar(100, 100, 100),new Scalar(109, 109, 109),binary);
-        Imgproc.blur(binary,binary, new Size(3,3));
+        Imgproc.cvtColor(img, hsv_img, Imgproc.COLOR_RGB2HSV);
+        Core.inRange(hsv_img,new Scalar(90, 90, 90),new Scalar(140, 140, 140),binary);
+        Imgproc.blur(binary,binary, new Size(5,5));
         Imgproc.erode(binary,binary,new Mat());
         Rect boundRect;
         binary.copyTo(cont);
-        Imgproc.findContours(cont, contours, new Mat(), Imgproc.RETR_LIST,Imgproc.CHAIN_APPROX_SIMPLE, new Point(0,0));
+        Imgproc.findContours(cont, contours, new Mat(), Imgproc.RETR_LIST,Imgproc.CHAIN_APPROX_SIMPLE);
 
         double max =0;
         int i_cont = -1;
         int i;
-        Mat drawing = new Mat();
         drawing = drawing.zeros(cont.size(), CvType.CV_8UC3);
         for( i =0; i< contours.size(); i++){
             if (abs(Imgproc.contourArea(contours.get(i))) > max ){
@@ -48,8 +48,8 @@ public class CatDetection {
         MatOfPoint2f thisContour2f = new MatOfPoint2f();
         MatOfPoint approxContour = new MatOfPoint();
         MatOfPoint2f approxContour2f = new MatOfPoint2f();
-        contours.get(i_cont).convertTo(thisContour2f, CvType.CV_32FC2);
         if(i_cont>=0){
+            contours.get(i_cont).convertTo(thisContour2f, CvType.CV_32FC2);
             Imgproc.approxPolyDP(thisContour2f,approxContour2f,3, true );
             approxContour2f.convertTo(approxContour, CvType.CV_32S);
             boundRect = Imgproc.boundingRect(approxContour);

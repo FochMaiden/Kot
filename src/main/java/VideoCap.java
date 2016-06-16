@@ -1,4 +1,5 @@
 import org.opencv.core.Core;
+import org.opencv.core.Mat;
 import org.opencv.highgui.VideoCapture;
 import java.awt.image.BufferedImage;
 
@@ -9,6 +10,7 @@ public class VideoCap {
 
     VideoCapture cap;
     Mat2Image mat2Img = new Mat2Image();
+    CatDetection catDetection;
 
     VideoCap(){
         cap = new VideoCapture();
@@ -17,6 +19,7 @@ public class VideoCap {
 
     BufferedImage getOneFrame() {
         cap.read(mat2Img.mat);
+        catDetection = new CatDetection(cap, mat2Img.mat);
 
         return mat2Img.getImage(mat2Img.mat);
     }

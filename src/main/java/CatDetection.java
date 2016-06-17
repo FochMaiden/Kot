@@ -7,29 +7,32 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 public class CatDetection {
-    private Mat frame, img, hsv_img, binary;
+    private Mat img, hsv_img, binary;
     private Mat cont;
     private List<MatOfPoint> contours;
-    private List<Mat> end;
-    private Mat drawing = new Mat();
+
 
 
     CatDetection(Mat frame){
-        this.frame = frame;
-        this.img = new Mat();
+        this.img = frame;
         this.hsv_img = new Mat();
         this.binary = new Mat();
         this.cont = new Mat();
         contours = new ArrayList<MatOfPoint>();
-        end = new ArrayList<Mat>();
     }
 
-    public List<Mat> detect(){
-        frame.copyTo(img);
+    public Mat detect(){
+        if(img.empty()){
+            System.err.print("ERROR. Frame is empty. Try again.");
+            detect();
+        }
         Imgproc.cvtColor(img, hsv_img, Imgproc.COLOR_RGB2HSV);
         Core.inRange(hsv_img,new Scalar(90, 90, 90),new Scalar(140, 140, 140),binary);
         Imgproc.blur(binary,binary, new Size(5,5));
+
         Imgproc.erode(binary,binary,new Mat());
+       // Imgproc.dilate(binary, binary, new Mat());
+
         Rect boundRect;
         binary.copyTo(cont);
         Imgproc.findContours(cont, contours, new Mat(), Imgproc.RETR_LIST,Imgproc.CHAIN_APPROX_SIMPLE);
@@ -37,7 +40,7 @@ public class CatDetection {
         double max =0;
         int i_cont = -1;
         int i;
-        drawing = drawing.zeros(cont.size(), CvType.CV_8UC3);
+
         for( i =0; i< contours.size(); i++){
             if (abs(Imgproc.contourArea(contours.get(i))) > max ){
                 max = abs(Imgproc.contourArea(contours.get(i)));
@@ -57,14 +60,11 @@ public class CatDetection {
             Core.rectangle(img, boundRect.tl(), boundRect.br(), new Scalar(125, 250, 125), 2, 8, 0);
             Core.line(img, boundRect.tl(), boundRect.br(), new Scalar(250, 125, 125), 2, 8, 0);
             Core.line(img, new Point(boundRect.x + boundRect.width, boundRect.y), new Point(boundRect.x, boundRect.y+boundRect.height), new Scalar(250, 125, 125), 2, 8, 0 );
-            String s = boundRect.x + boundRect.width/2 + "x" + boundRect.y + boundRect.height/2;
-            Core.putText(img, s, new Point(50, 50), Core.FONT_HERSHEY_COMPLEX, 1, new Scalar(20, 40, 80), 3, 8, false);
-            Imgproc.drawContours(drawing, contours, i_cont, new Scalar(125,125,250), 2);
-            end.add(drawing);
-            end.add(img);
-            end.add(binary);
+            for(int j =0; j< contours.size(); j++)
+                Imgproc.drawContours(img, contours, j, new Scalar(255,0 , 0), 2);
+
         }
-        return end;
+        return img;
     }
 
 }

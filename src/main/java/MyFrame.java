@@ -1,3 +1,5 @@
+import org.opencv.imgproc.Imgproc;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -5,10 +7,6 @@ import java.awt.*;
 public class MyFrame extends JFrame {
     private JPanel contentPane;
 
-
-    /**
-     * Launch the application.
-     */
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -21,10 +19,6 @@ public class MyFrame extends JFrame {
             }
         });
     }
-
-    /**
-     * Create the frame.
-     */
     public MyFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 650, 490);

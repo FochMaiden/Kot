@@ -19,7 +19,6 @@ public class VideoCap {
     BufferedImage getOneFrame() {
         cap.read(mat2Img.mat);
         CatDetection cat = new CatDetection(mat2Img.mat);
-
         return mat2Img.getImage(cat.detect());
     }
 }

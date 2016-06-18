@@ -7,14 +7,15 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 public class CatDetection {
-    private Mat img, hsv_img, binary;
+    private Mat img, hsv_img, binary, gray;
     private Mat cont;
     private List<MatOfPoint> contours;
-
+    int x,y;
 
 
     CatDetection(Mat frame){
         this.img = frame;
+        this.gray = new Mat();
         this.hsv_img = new Mat();
         this.binary = new Mat();
         this.cont = new Mat();
@@ -26,8 +27,13 @@ public class CatDetection {
             System.err.print("ERROR. Frame is empty. Try again.");
             detect();
         }
-        Imgproc.cvtColor(img, hsv_img, Imgproc.COLOR_RGB2HSV);
-        Core.inRange(hsv_img,new Scalar(90, 90, 90),new Scalar(140, 140, 140),binary);
+        x=200;
+        y=210;
+
+        gray = new Mat(img.size(), CvType.CV_8UC1);
+        Imgproc.cvtColor(img, gray, Imgproc.COLOR_RGB2GRAY);
+
+        Core.inRange(gray,new Scalar(x,x,x),new Scalar(y,y,y),binary);
         Imgproc.blur(binary,binary, new Size(5,5));
 
         Imgproc.erode(binary,binary,new Mat());
@@ -56,15 +62,15 @@ public class CatDetection {
             Imgproc.approxPolyDP(thisContour2f,approxContour2f,3, true );
             approxContour2f.convertTo(approxContour, CvType.CV_32S);
             boundRect = Imgproc.boundingRect(approxContour);
-            Core.fillConvexPoly(img,approxContour,new Scalar(0,255,0));
-            Core.rectangle(img, boundRect.tl(), boundRect.br(), new Scalar(125, 250, 125), 2, 8, 0);
-            Core.line(img, boundRect.tl(), boundRect.br(), new Scalar(250, 125, 125), 2, 8, 0);
-            Core.line(img, new Point(boundRect.x + boundRect.width, boundRect.y), new Point(boundRect.x, boundRect.y+boundRect.height), new Scalar(250, 125, 125), 2, 8, 0 );
+            Core.fillConvexPoly(gray,approxContour,new Scalar(0,255,0));
+            Core.rectangle(gray, boundRect.tl(), boundRect.br(), new Scalar(125, 250, 125), 2, 8, 0);
+            Core.line(gray, boundRect.tl(), boundRect.br(), new Scalar(250, 125, 125), 2, 8, 0);
+            Core.line(gray, new Point(boundRect.x + boundRect.width, boundRect.y), new Point(boundRect.x, boundRect.y+boundRect.height), new Scalar(250, 125, 125), 2, 8, 0 );
             for(int j =0; j< contours.size(); j++)
-                Imgproc.drawContours(img, contours, j, new Scalar(255,0 , 0), 2);
+                Imgproc.drawContours(gray, contours, j, new Scalar(255,0 , 0), 2);
 
         }
-        return img;
+        return gray;
     }
 
 }

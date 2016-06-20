@@ -1,6 +1,7 @@
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
+import org.opencv.core.MatOfPoint;
 import org.opencv.highgui.Highgui;
 import org.opencv.highgui.VideoCapture;
 
@@ -26,9 +27,11 @@ public class Main {
         jframe.setVisible(true);
 
         Mat imageToDisplay = new Mat();
-
-
+        MatOfPoint
         VideoCapture camera = new VideoCapture(0);
+        FindShape findShape = new FindShape(camera);
+
+
         while(true){
             camera.read(imageToDisplay);
             BufferedImageFromMat imageDisplayed = new BufferedImageFromMat(imageToDisplay);

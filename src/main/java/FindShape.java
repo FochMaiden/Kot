@@ -57,7 +57,9 @@ public class FindShape {
             Core.line(end, boundRect.tl(), boundRect.br(), new Scalar(250, 125, 125), 2, 8, 0); // X wyrysowany
             Core.line(end, new Point(boundRect.x + boundRect.width, boundRect.y), new Point(boundRect.x, boundRect.y + boundRect.height), new Scalar(250, 125, 125), 2, 8, 0);
             Imgproc.drawContours(end, contours, i_max, new Scalar(255, 0, 0), 2); // kontury z listy rysowane na img
-            System.out.println("X: "+ (boundRect.x+ boundRect.width/2) +" Y: "+(boundRect.y+ boundRect.height/2) + "width" + "height");
+            if(boundRect.width >= boundRect.height){
+                System.out.println("X: "+ (boundRect.x+ boundRect.width/2) +" Y: "+(boundRect.y+ boundRect.height/2) + "width" + "height");
+            }
         }
     }
 

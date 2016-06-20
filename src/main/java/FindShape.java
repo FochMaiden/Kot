@@ -26,11 +26,12 @@ public class FindShape {
 
     }
 
-    MatOfPoint find(){
+    Mat find(){
         Core.subtract(firstImage, secondImage, foregroundImage);
         Imgproc.adaptiveThreshold(foregroundImage, end, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 11, 2);
 
-        return contour;
+
+        return end;
     }
 
 }

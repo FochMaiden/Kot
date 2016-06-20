@@ -16,7 +16,7 @@ public class BufferedImageFromMat {
 
     BufferedImage getBufferedImageFromMat(Mat image){
         MatOfByte bytemat = new MatOfByte();
-        Highgui.imencode(".jpg", image, bytemat);
+        Highgui.imencode(".bmp", image, bytemat);
         byte[] bytes = bytemat.toArray();
         InputStream in = new ByteArrayInputStream(bytes);
         BufferedImage img = null;

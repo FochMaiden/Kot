@@ -27,17 +27,23 @@ public class Main {
         jframe.setVisible(true);
 
         Mat imageToDisplay = new Mat();
+
         VideoCapture camera = new VideoCapture(0);
         FindShape findShape = new FindShape(camera);
         BufferedImageFromMat imageDisplayed = new BufferedImageFromMat();
         //imageToDisplay = findShape.find();
+        findShape.getFirstimage();
 
-
+    int x=0;
         while(true){
-            imageToDisplay = findShape.find();
-            ImageIcon image = new ImageIcon(imageDisplayed.getBufferedImageFromMat(imageToDisplay));
-            vidpanel.setIcon(image);
-            vidpanel.repaint();
+           // while(x<3) {
+                imageToDisplay = findShape.find();
+                ImageIcon image = new ImageIcon(imageDisplayed.getBufferedImageFromMat(imageToDisplay));
+                vidpanel.setIcon(image);
+                vidpanel.repaint();
+                x++;
+           // }
+           // x=0;
         }
     }
 }

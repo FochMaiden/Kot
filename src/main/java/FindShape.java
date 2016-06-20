@@ -19,14 +19,16 @@ public class FindShape {
     }
 
     Mat find(){
-        this.firstImage = myFrame.imageAsBW();
         this.secondImage = myFrame.imageAsBW();
         Core.subtract(firstImage, secondImage, foregroundImage);
-        Imgproc.findContours();
-        Imgproc.adaptiveThreshold(foregroundImage, end, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 11, 2);
+        Imgproc.threshold(foregroundImage, end, 50,255, Imgproc.THRESH_BINARY);
 
 
         return end;
+    }
+
+    void getFirstimage(){
+        this.firstImage = myFrame.imageAsBW();
     }
 
 }

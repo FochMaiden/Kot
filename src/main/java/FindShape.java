@@ -2,6 +2,8 @@ import org.opencv.core.*;
 import org.opencv.highgui.VideoCapture;
 import org.opencv.imgproc.Imgproc;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +21,18 @@ public class FindShape {
     private List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
     private double max=0;
     private int i_max=0;
+    private RxTxJavaServo serialPort;
+    private byte[] tabX,tabY;
 
     public FindShape(VideoCapture camera){
         this.camera=camera;
         this.myFrame = new MyFrame(camera);
+        this.serialPort = new RxTxJavaServo();
+        try {
+            serialPort.connect("COM3");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     Mat find() {
@@ -62,6 +72,14 @@ public class FindShape {
                 xs = String.format("%03d",(boundRect.x + boundRect.width / 2));
                 ys = String.format("%03d",(boundRect.y + boundRect.height / 2));
                 System.out.println("X: "+ xs +" Y: "+ ys + "width");
+                //tabX = ByteBuffer.allocate(4).putInt(Integer.valueOf(xs)).array();
+                //tabY = ByteBuffer.allocate(4).putInt(Integer.valueOf(ys)).array();
+               // try {
+                  //  serialPort.out.write(tabX);
+                 //   serialPort.out.write(tabY);
+               // } catch (IOException e) {
+               //     e.printStackTrace();
+               // }
             }
         }
     }

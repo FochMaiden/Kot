@@ -27,6 +27,7 @@ public class Main {
         jframe.setVisible(true);
 
         Mat imageToDisplay = new Mat();
+
         VideoCapture camera = new VideoCapture(0);
         FindShape findShape = new FindShape(camera);
         BufferedImageFromMat imageDisplayed = new BufferedImageFromMat();

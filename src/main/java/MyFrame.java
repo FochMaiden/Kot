@@ -1,5 +1,6 @@
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Size;
 import org.opencv.highgui.VideoCapture;
 import org.opencv.imgproc.Imgproc;
 
@@ -17,6 +18,7 @@ public class MyFrame {
         camera.read(image);
         mathelp = new Mat(image.size(), CvType.CV_8UC1);
         Imgproc.cvtColor(image,mathelp,Imgproc.COLOR_RGB2GRAY);
+        Imgproc.GaussianBlur(mathelp, mathelp, new Size(3,3),1);
         return mathelp;
     }
 

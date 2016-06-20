@@ -20,7 +20,7 @@ public class FindShape {
 
     Mat find(){
         this.secondImage = myFrame.imageAsBW();
-        Core.subtract(firstImage, secondImage, foregroundImage);
+        Core.subtract(secondImage, firstImage, foregroundImage);
         Imgproc.threshold(foregroundImage, end, 50,255, Imgproc.THRESH_BINARY);
 
 

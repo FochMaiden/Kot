@@ -31,7 +31,6 @@ public class Main {
         VideoCapture camera = new VideoCapture(0);
         FindShape findShape = new FindShape(camera);
         BufferedImageFromMat imageDisplayed = new BufferedImageFromMat();
-        //imageToDisplay = findShape.find();
         findShape.getFirstimage();
 
     int x=0;

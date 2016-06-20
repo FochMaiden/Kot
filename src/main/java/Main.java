@@ -29,12 +29,13 @@ public class Main {
         Mat imageToDisplay = new Mat();
         VideoCapture camera = new VideoCapture(0);
         FindShape findShape = new FindShape(camera);
+        BufferedImageFromMat imageDisplayed = new BufferedImageFromMat();
+        //imageToDisplay = findShape.find();
 
 
         while(true){
-            camera.read(imageToDisplay);
-            BufferedImageFromMat imageDisplayed = new BufferedImageFromMat(imageToDisplay);
-            ImageIcon image = new ImageIcon(imageDisplayed.getBufferedImageFromMat());
+            imageToDisplay = findShape.find();
+            ImageIcon image = new ImageIcon(imageDisplayed.getBufferedImageFromMat(imageToDisplay));
             vidpanel.setIcon(image);
             vidpanel.repaint();
         }

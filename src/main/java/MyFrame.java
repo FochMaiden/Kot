@@ -7,7 +7,7 @@ import org.opencv.imgproc.Imgproc;
 public class MyFrame {
 
     VideoCapture camera;
-    Mat image,mathelp;
+    Mat image = new Mat(),mathelp;
 
     public MyFrame(VideoCapture camera){
         this.camera = camera;

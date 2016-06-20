@@ -11,11 +11,10 @@ import java.io.InputStream;
 public class BufferedImageFromMat {
     Mat image;
 
-    BufferedImageFromMat(Mat image){
-        this.image = image;
+    BufferedImageFromMat(){
     }
 
-    BufferedImage getBufferedImageFromMat(){
+    BufferedImage getBufferedImageFromMat(Mat image){
         MatOfByte bytemat = new MatOfByte();
         Highgui.imencode(".jpg", image, bytemat);
         byte[] bytes = bytemat.toArray();

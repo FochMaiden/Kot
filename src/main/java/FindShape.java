@@ -25,7 +25,7 @@ public class FindShape {
         Imgproc.adaptiveThreshold(foregroundImage, end, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 11, 2);
 
 
-        return foregroundImage;
+        return end;
     }
 
 }

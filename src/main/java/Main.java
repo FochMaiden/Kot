@@ -17,20 +17,6 @@ public class Main {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
-    public static BufferedImage Mat2bufferedImage(Mat image) {
-        MatOfByte bytemat = new MatOfByte();
-        Highgui.imencode(".jpg", image, bytemat);
-        byte[] bytes = bytemat.toArray();
-        InputStream in = new ByteArrayInputStream(bytes);
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return img;
-    }
-
     public static void main(String[] args) {
         JFrame jframe = new JFrame("HUMAN MOTION DETECTOR FPS");
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,11 +28,11 @@ public class Main {
         Mat imageToDisplay = new Mat();
 
 
-
         VideoCapture camera = new VideoCapture(0);
         while(true){
             camera.read(imageToDisplay);
-            ImageIcon image = new ImageIcon(Mat2bufferedImage(imageToDisplay));
+            BufferedImageFromMat imageDisplayed = new BufferedImageFromMat(imageToDisplay);
+            ImageIcon image = new ImageIcon(imageDisplayed.getBufferedImageFromMat());
             vidpanel.setIcon(image);
             vidpanel.repaint();
         }

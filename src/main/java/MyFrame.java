@@ -18,7 +18,7 @@ public class MyFrame {
         camera.read(image);
         mathelp = new Mat(image.size(), CvType.CV_8UC1);
         Imgproc.cvtColor(image,mathelp,Imgproc.COLOR_RGB2GRAY);
-        Imgproc.GaussianBlur(mathelp, mathelp, new Size(1,1),1);
+        Imgproc.GaussianBlur(mathelp, mathelp, new Size(3,3),1);
         return mathelp;
     }
 

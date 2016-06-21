@@ -2,10 +2,12 @@
 
 Servo servoX;
 Servo servoY;
-int X,Y;
-char valForX[3],valForY[3];
+int X,xl,Y,yl;
+char valForX[3];
+char valForY[3];
+char garbage[2];
 char z = EOF;
-int flag;
+int flag = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -18,29 +20,18 @@ void setup() {
 
 void loop() {
   if(Serial.available() > 0){
-      if(flag ==0){
-         analogWrite(5,0);
-        analogWrite(4,150);
-    Serial.readBytesUntil(z,valForY,3);
-      Y = atoi(valForY);
-      if(Y>90||Y<45){
-       servoY.write(91);
-      }else{
-        servoY.write(Y);
-      }
+    z = Serial.read();
+    if(z=='X'){
+      X = Serial.parseInt();
+      Serial.println(X);
+      X = map(X,0,400,70,120);
+      servoX.write(X);
 
-      flag =1;
-     }else{
-        analogWrite(5,150);
-        analogWrite(4,0);
-    Serial.readBytesUntil(z,valForX,3);
-      X = atoi(valForX);
-      if(X>90||X<45){
-        servoX.write(91);
-      }else{
-        servoX.write(X);
-      }
-      flag = 0;
+    }else if(z=='Y'){
+      Y = Serial.parseInt();
+      Serial.println(Y);
+      Y = map(Y,0,400,90,30);
+      servoY.write(Y);
     }
   }
 }

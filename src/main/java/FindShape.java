@@ -23,6 +23,7 @@ public class FindShape {
     private int i_max=0;
     private RxTxJavaServo serialPort;
     private byte[] tabX,tabY;
+    private char[] tabX2,tabY2;
 
     public FindShape(VideoCapture camera){
         this.camera=camera;
@@ -69,17 +70,18 @@ public class FindShape {
             Core.line(end, new Point(boundRect.x + boundRect.width, boundRect.y), new Point(boundRect.x, boundRect.y + boundRect.height), new Scalar(250, 125, 125), 2, 8, 0);
             Imgproc.drawContours(end, contours, i_max, new Scalar(255, 0, 0), 2); // kontury z listy rysowane na img
             if(boundRect.width >= boundRect.height){
-                xs = String.format("%03d",(boundRect.x + boundRect.width / 2));
-                ys = String.format("%03d",(boundRect.y + boundRect.height / 2));
-                System.out.println("X: "+ xs +" Y: "+ ys + "width");
-                //tabX = ByteBuffer.allocate(4).putInt(Integer.valueOf(xs)).array();
-                //tabY = ByteBuffer.allocate(4).putInt(Integer.valueOf(ys)).array();
-               // try {
-                  //  serialPort.out.write(tabX);
-                 //   serialPort.out.write(tabY);
-               // } catch (IOException e) {
-               //     e.printStackTrace();
-               // }
+                xs = String.format("X%03d",(boundRect.x + boundRect.width / 2));
+                ys = String.format("Y%03d",(boundRect.y + boundRect.height / 2));
+                System.out.println(xs + "   " + ys);
+                tabX = xs.getBytes();
+                tabY = ys.getBytes();
+
+                try {
+                    serialPort.out.write(tabX);
+                    serialPort.out.write(tabY);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

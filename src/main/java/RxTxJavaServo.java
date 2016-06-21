@@ -32,9 +32,5 @@ public class RxTxJavaServo {
                 }
             }
         }
-
-
-
-
 }
 

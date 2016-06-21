@@ -28,7 +28,7 @@ public class Main {
 
         Mat imageToDisplay = new Mat();
 
-        VideoCapture camera = new VideoCapture(0);
+        VideoCapture camera = new VideoCapture(1);
         FindShape findShape = new FindShape(camera);
         BufferedImageFromMat imageDisplayed = new BufferedImageFromMat();
         findShape.getFirstimage();
